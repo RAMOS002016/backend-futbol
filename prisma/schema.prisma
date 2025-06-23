@@ -1,0 +1,49 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Usuario {
+  id       Int      @id @default(autoincrement())
+  nombre   String
+  email    String   @unique
+  password String
+  rol      String
+  creadoEn DateTime @default(now())
+}
+model Jugador {
+  id        Int      @id @default(autoincrement())
+  nombre    String
+  edad      Int
+  posicion  String
+  equipo    String
+  creadoEn  DateTime @default(now())
+}
+model Entrenador {
+  id        Int      @id @default(autoincrement())
+  nombre    String
+  especialidad String
+  telefono  String
+  creadoEn  DateTime @default(now())
+}
+
+model Entrenamiento {
+  id          Int      @id @default(autoincrement())
+  titulo      String
+  descripcion String
+  fecha       DateTime
+  entrenador  String
+  creadoEn    DateTime @default(now())
+}
+
+model Asistencia {
+  id        Int      @id @default(autoincrement())
+  jugadorId Int
+  fecha     DateTime
+  presente  Boolean
+  creadoEn  DateTime @default(now())
+}
