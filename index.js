@@ -187,3 +187,22 @@ app.post('/asistencias', async (req, res) => {
     res.status(500).json({ error: 'Error al crear asistencia' });
   }
 });
+app.get('/usuarios', async (req, res) => {
+  const { email } = req.query;
+
+  try {
+    if (email) {
+      const usuario = await prisma.usuario.findMany({
+        where: { email }
+      });
+      return res.json(usuario);
+    }
+
+    // Si no se pasa email, devuelve todos
+    const usuarios = await prisma.usuario.findMany();
+    res.json(usuarios);
+  } catch (error) {
+    console.error("Error en /usuarios:", error);
+    res.status(500).json({ error: 'Error al obtener usuarios' });
+  }
+});
